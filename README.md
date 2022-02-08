@@ -1,5 +1,39 @@
 <!-- omit in toc -->
-# コマンドメモ
+# MSSQL with Docker
+
+## 基本の使い方
+
+### 環境構築
+
+環境構築.md （作成中）を基に下記の環境を構築する！
+
+- WSL2（Ubuntu）
+- Docker
+- Docker Compose
+
+### 開始
+
+1. WSL を立ち上げる。
+2. WSL 環境上で Docker が起動しているか確認する。
+    1. `sudo service docker status` を送信する。
+    2. `Docker is running` と出力された場合:
+    OK 。
+    3. `Docker is not running` と表示された場合:
+    起動させるコマンド `sudo service docker start` を送信して、もっかい確認コマンドを送信して確認する。
+3. `docker-compose up -d` を送信して SQL Server のコンテナを作成 & バックグラウンドで起動する。
+4. `docker ps` コマンドを送信してコンテナが起動中か確認する。
+5. `docker-compose exec main bash` で起動中のコンテナへ入る。
+6. `sqlcmd -S localhost -U SA -P 'Test1234'` を送信して SQL Server へログインする。
+7. SQL Server のコマンドを参考に作業する！
+
+### 終了
+
+1. SQL Server から抜けるときは `exit` を送信する。
+2. コンテナから抜けるときも `exit` を送信する。
+3. `docker-compose stop` で起動中のコンテナを停止する。
+4. `docker ps` コマンドを送信してコンテナが一覧に表示されていないことを確認する。
+5. `sudo service docker stop` を送信して Docker を停止する。
+6. `sudo service docker status` で Docker が終了していることを確認する。
 
 ## 1. Docker
 
@@ -53,9 +87,6 @@
     ```
 
 ## 2. SQL Server
-
-参考:
-https://qiita.com/chihiro/items/75b12aca631f79be28b2
 
 ### 2.1. 基本
 
@@ -139,6 +170,20 @@ https://qiita.com/chihiro/items/75b12aca631f79be28b2
     ```
 
 ### 2.3. レコード操作
+
+- レコードを抽出する
+
+    ```sql
+    select
+        member_id,
+        first_name,
+    from members
+    where 条件
+    ;
+    go
+
+    -- 全部抜き出すときは select 句に * を指定しよう
+    ```
 
 - レコードを追加する（1行）
 
