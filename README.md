@@ -1,17 +1,19 @@
 <!-- omit in toc -->
 # MSSQL with Docker
 
-## 基本の使い方
+SQL Server を WSL 上の Docker コンテナで構築するサンプルです。
 
-### 環境構築
+## 1. 基本の使い方
 
-環境構築.md （作成中）を基に下記の環境を構築する！
+### 1.1. 環境構築
+
+環境構築.md を基に下記の環境を構築する（（ （作成中……。。。）））
 
 - WSL2（Ubuntu）
 - Docker
 - Docker Compose
 
-### 開始
+### 1.2. Docker 起動 ～ 作業開始
 
 1. WSL を立ち上げる。
 2. WSL 環境上で Docker が起動しているか確認する。
@@ -26,7 +28,7 @@
 6. `sqlcmd -S localhost -U SA -P 'Test1234'` を送信して SQL Server へログインする。
 7. SQL Server のコマンドを参考に作業する！
 
-### 終了
+### 1.3. 作業終了 ～ Docker の停止
 
 1. SQL Server から抜けるときは `exit` を送信する。
 2. コンテナから抜けるときも `exit` を送信する。
@@ -35,9 +37,9 @@
 5. `sudo service docker stop` を送信して Docker を停止する。
 6. `sudo service docker status` で Docker が終了していることを確認する。
 
-## 1. Docker
+## 2. Docker 操作方法
 
-### 1.1. Docker コマンド
+### 2.1. Docker コマンド
 
 - Docker を起動
 
@@ -52,7 +54,7 @@
     docker ps
     ```
 
-### 1.2. Docker Compose コマンド
+### 2.2. Docker Compose コマンド
 
 - コンテナをバックグラウンドで起動
 
@@ -86,9 +88,9 @@
     docker-compose down
     ```
 
-## 2. SQL Server
+## 3. SQL Server 操作方法
 
-### 2.1. 基本
+### 3.1. コンテナ上での操作
 
 - SQL Server へログインする
 
@@ -102,7 +104,7 @@
     sqlcmd -S localhost -U SA -P 'Test1234' -i /mount_dir/sql/show_databases.sql
     ```
 
-### 2.2. データベース操作
+### 3.2. データベース操作
 
 - データベース一覧を取得する
 
@@ -132,7 +134,7 @@
     go
     ```
 
-### 2.3. テーブル操作
+### 3.3. テーブル操作
 
 - テーブル一覧を表示する
 
@@ -166,10 +168,11 @@
 - カラムの情報を表示する（列名 / 型 / 長さ / NULL 許可 のみ）
 
     ```text
-    mount_dir/sql/show_columns.sql を見てね
+    長いので別ファイルに切り分けてます。
+    mount_dir/sql/show_columns.sql を見てね。
     ```
 
-### 2.3. レコード操作
+### 3.4. レコード操作
 
 - レコードを抽出する
 
