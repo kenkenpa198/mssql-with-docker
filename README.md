@@ -7,7 +7,7 @@ SQL Server を WSL 上の Docker コンテナで構築するサンプルです�
 
 ### 1.1. 環境構築
 
-環境構築.md を基に下記の環境を構築する（（ （作成中……。。。）））
+環境構築.md を基に下記の環境を構築する（作成中）。
 
 - WSL2（Ubuntu）
 - Docker
@@ -18,9 +18,9 @@ SQL Server を WSL 上の Docker コンテナで構築するサンプルです�
 1. WSL を立ち上げる。
 2. WSL 環境上で Docker が起動しているか確認する。
     1. `sudo service docker status` を送信する。
-    2. `Docker is running` と出力された場合:
+    2. `Docker is running` と出力された場合:  
     OK 。
-    3. `Docker is not running` と表示された場合:
+    3. `Docker is not running` と表示された場合:  
     起動させるコマンド `sudo service docker start` を送信して、もっかい確認コマンドを送信して確認する。
 3. `docker-compose up -d` を送信して SQL Server のコンテナを作成 & バックグラウンドで起動する。
 4. `docker ps` コマンドを送信してコンテナが起動中か確認する。
