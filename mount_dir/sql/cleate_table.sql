@@ -4,5 +4,5 @@ create table members (
     last_name varchar(50) null,
     created_at datetime not null,
     updated_at datetime null
-) ;
-go
+)
+;

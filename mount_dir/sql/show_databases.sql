@@ -1,2 +1,1 @@
-select name from sys.databases;
-go
+select name from sys.databases ;
