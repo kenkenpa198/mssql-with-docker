@@ -2,7 +2,7 @@
 
 SQL Server で指定したテーブルの下記の情報を一覧で取得するクエリです。
 - 主キーの有無
-- 属性
+- データ型
 - 長さ
 - NULL 許可
 
@@ -22,7 +22,7 @@ SELECT
         THEN 'YES'
         ELSE 'NO'
     END                     AS 'PK',
-    type_name(user_type_id) AS '属性',
+    type_name(user_type_id) AS 'データ型',
     max_length              AS '長さ',
     CASE
         WHEN is_nullable = 1
