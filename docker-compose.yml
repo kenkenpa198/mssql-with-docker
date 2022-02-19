@@ -1,10 +1,3 @@
-###### コマンドメモ: docker-compose ######
-# コンテナをBGで起動                   : docker-compose up -d
-# 起動しているコンテナを停止する       : docker-compose stop
-# 起動しているコンテナのログを表示する : docker-compose logs -f
-# コンテナを削除する                   : docker-compose down
-# 起動しているコンテナに bash で入る   : docker-compose exec main bash
-
 version: '3'
 services:
   main:
@@ -15,8 +8,9 @@ services:
     ports:
       - 1433:1433
 
-    # 環境変数を指定
+    # 環境変数を設定
     environment:
+      MSSQL_PID: Express # ライセンスが不要な Express エディションを使用する
       ACCEPT_EULA: Y # EULA（使用許諾契約）に同意する ※これを入れないと起動できない
       TZ: Asia/Tokyo # タイムゾーンを JST で設定
       SA_PASSWORD: Test1234 # パスワード
@@ -24,6 +18,6 @@ services:
       PATH: $PATH:/opt/mssql-tools/bin/ #sqlcmd の PATH を通す
 
     # ホスト側ディレクトリとコンテナをマウント
-    # この docker-compose.yml と同じ階層の mount_dir ディレクトリ配下にファイルを配置すると、コンテナ上の同名ディレクトリへ同期される
+    # この docker-compose.yml と同じ階層の mount_dir ディレクトリ配下にファイルを配置すると、コンテナ上の root 配下にある同名ディレクトリへ同期される
     volumes:
       - ./mount_dir:/mount_dir
