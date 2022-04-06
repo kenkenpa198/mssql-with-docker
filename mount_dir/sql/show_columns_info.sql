@@ -41,10 +41,11 @@ SELECT
         WHEN LEFT(d.definition, 1) = '(' AND RIGHT(d.definition, 1) = ')'
         THEN SUBSTRING(d.definition, 2, LEN(d.definition) - 2)
         ELSE NULL
-    END AS 'デフォルト値'
+    END                       AS 'デフォルト値'
 
 -- ベースとなる sys.objects カタログビューテーブル。このビューへ各情報を結合する
-FROM sys.objects AS o
+FROM
+    sys.objects AS o
 
     -- カラムのカタログビュー（カラム名やデータ型などの情報を保有）と内部結合
     INNER JOIN sys.columns AS c
@@ -56,7 +57,8 @@ FROM sys.objects AS o
             ic.object_id,
             ic.column_id,
             i.is_primary_key
-        FROM sys.indexes AS i
+        FROM
+            sys.indexes AS i
             INNER JOIN sys.index_columns AS ic
             ON
                 i.object_id = ic.object_id
@@ -67,7 +69,7 @@ FROM sys.objects AS o
         AND c.column_id = pk.column_id
 
     -- デフォルト制約のカタログビュー（デフォルト値の情報を保有）と外部結合
-    LEFT OUTER JOIN  sys.default_constraints AS d
+    LEFT OUTER JOIN sys.default_constraints AS d
     ON
         o.object_id = d.parent_object_id
         AND c.column_id = d.parent_column_id
