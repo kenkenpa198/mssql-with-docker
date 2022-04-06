@@ -1,2 +1,2 @@
-alter table members
-add primary key (member_id, first_name)
+ALTER TABLE members
+ADD PRIMARY KEY (member_id, first_name)

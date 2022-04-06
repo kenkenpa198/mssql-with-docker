@@ -1,4 +1,4 @@
-select *
-from members
-where first_name = 'modane'
+SELECT *
+FROM members
+WHERE first_name = 'modane'
 ;

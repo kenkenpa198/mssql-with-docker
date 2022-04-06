@@ -1,8 +1,8 @@
-bulk insert members
-from '/mount_dir/csv/members.csv'
-with
+BULK INSERT members
+FROM '/mount_dir/csv/members.csv'
+WITH
     (
-        fieldterminator = ',', -- 区切り文字を指定
-        rowterminator = '\n' -- 行末を示す文字を指定
+        FIELDTERMINATOR = ',', -- 区切り文字を指定
+        ROWTERMINATOR = '\n' -- 行末を示す文字を指定
     )
 ;

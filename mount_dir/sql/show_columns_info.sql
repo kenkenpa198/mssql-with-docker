@@ -1,21 +1,19 @@
 /*******************************************************************
 
-指定したテーブルの下記の情報を一覧で取得する SQL Server 用の SQL クエリです。
+指定したテーブルの下記の情報を一覧で取得する SQL Server 用の SQL クエリ。
 - 主キーの有無
 - データ型
 - 長さ
 - NULL 許可
 - デフォルト値
 
-★ のコメントを記述している箇所へ、情報を取得したいテーブル名を指定して実行してください。
+★ のコメントを記述している箇所へ、情報を取得したいテーブル名を指定して実行する。
 
 ▼参考サイト
-- https://style.potepan.com/articles/24713.html            … ベースにさせていただきました。
-- https://ichiroku11.hatenablog.jp/entry/2015/12/20/213107 … PK 情報の結合を参考にしました。
-- https://johobase.com/sqlserver-catalogview-table-column/ … デフォルト値情報の結合と整形方法を参考にしました。
-
-加えて MS 公式のドキュメントも参考にしています。
-https://docs.microsoft.com/ja-jp/sql/relational-databases/system-catalog-views/object-catalog-views-transact-sql?view=sql-server-ver15
+- https://style.potepan.com/articles/24713.html
+- https://ichiroku11.hatenablog.jp/entry/2015/12/20/213107
+- https://johobase.com/sqlserver-catalogview-table-column/
+- https://docs.microsoft.com/ja-jp/sql/relational-databases/system-catalog-views/object-catalog-views-transact-sql?view=sql-server-ver15
 
 *******************************************************************/
 
@@ -44,7 +42,7 @@ SELECT
         ELSE NULL
     END AS 'デフォルト値'
 
--- ベースとなる sys.objects カタログビューテーブル。このビューへ各情報を結合する。
+-- ベースとなる sys.objects カタログビューテーブル。このビューへ各情報を結合する
 FROM sys.objects AS o
 
     -- カラムのカタログビュー（カラム名やデータ型などの情報を保有）と内部結合
@@ -75,7 +73,7 @@ FROM sys.objects AS o
 
 WHERE
     o.type = 'U' -- オブジェクトの種類を「テーブル (ユーザー定義)」のみに制限
-    AND o.name IN ('members') -- ★ ここに確認したいテーブル名を指定してください。他に見たいテーブルがあれば IN の指定にカンマ区切りで追加可能です。
+    AND o.name IN ('members') -- ★ ここに確認したいテーブル名を指定する。他に見たいテーブルがあれば IN の指定にカンマ区切りで追加可能
 
 -- テーブル名 > カラム ID の順に昇順で出力
 ORDER BY

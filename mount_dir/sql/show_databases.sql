@@ -1,1 +1,1 @@
-select name from sys.databases ;
+SELECT name FROM sys.databases ;

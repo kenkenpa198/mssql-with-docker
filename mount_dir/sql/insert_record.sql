@@ -1,10 +1,10 @@
-insert into members (
+INSERT INTO members (
     member_id,
     first_name,
     last_name,
     created_at
 )
-values (
+VALUES (
     1,
     'modane',
     'sakura',
