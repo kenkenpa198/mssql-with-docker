@@ -25,7 +25,7 @@ SQL Server を WSL 上の Docker コンテナで構築するサンプルです�
 4. `docker ps` コマンドを送信してコンテナが起動中か確認する。
 5. 作業方法に合わせて SQL Server の利用を開始する。
    1. CLI から実行する場合:
-      1. `docker-compose exec main bash` で起動中のコンテナへ入る。
+      1. `docker-compose exec db bash` で起動中のコンテナへ入る。
       2. `sqlcmd -S localhost -U SA -P 'Test1234'` を送信して SQL Server へログインする。
    2. Azure Data Studio で接続して実行する場合:
       1. 控えておいた IP アドレスを接続先サーバーへ指定する。
