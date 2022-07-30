@@ -13,7 +13,7 @@ SQL Server を WSL 上の Docker コンテナで構築するサンプルです�
 - Docker Compose
 
 ※ SQL Server の Docker Image は 2GB 以上が必須要件。  
-[Microsoft SQL Server by Microsoft | Docker Hub](https://hub.docker.com/_/microsoft-mssql-server#:~:text=Configuration-,Requirements,-This%20image%20requires))
+[Microsoft SQL Server by Microsoft | Docker Hub](https://hub.docker.com/_/microsoft-mssql-server#:~:text=Configuration-,Requirements,-This%20image%20requires)
 
 ## 2. 作業を開始するとき
 
@@ -47,7 +47,7 @@ SQL Server を WSL 上の Docker コンテナで構築するサンプルです�
 3. `sudo service docker stop` を送信して Docker を停止する。
 4. `sudo service docker status` で Docker が終了していることを確認する。
 
-## 4. 参考サイト
+## 4. 参考文献
 
 ### 4.1. WSL2
 
