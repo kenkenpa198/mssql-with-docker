@@ -24,7 +24,7 @@ BULK INSERT members
 FROM '/mount_dir/csv/members.csv'
 WITH
     (
-        DATAFILETYPE = 'char'  -- 文字形式で取り込み
+        DATAFILETYPE = 'char', -- 文字形式で取り込み
         FIELDTERMINATOR = ',', -- 区切り文字を指定
         ROWTERMINATOR = '\n',  -- 行末を示す文字を指定
         FIRSTROW = 2           -- 読み込み開始行を指定

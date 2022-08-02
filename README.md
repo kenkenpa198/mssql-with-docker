@@ -1,10 +1,14 @@
 <!-- omit in toc -->
 # MSSQL with Docker
 
-SQL Server を WSL 上の Docker コンテナで構築するサンプルです。  
-[環境構築メモ.md](docs/環境構築メモ.md) 、[コマンドメモ.md](docs/コマンドメモ.md) もご参考に。
+SQL Server を WSL 上の Docker コンテナで構築する自分用テンプレート & メモ置き場です。  
 
-## 1. 必要な環境
+## 1. リンク
+
+- [環境構築メモ.md](docs/環境構築メモ.md)
+- [コマンドメモ.md](docs/コマンドメモ.md)
+
+## 2. 必要な環境
 
 - OS: Windows 10 バージョン 2004 以降 (ビルド 19041 以降) または Windows 11
 - WSL2（Ubuntu）
@@ -15,7 +19,7 @@ SQL Server を WSL 上の Docker コンテナで構築するサンプルです�
 ※ SQL Server の Docker Image は 2GB 以上が必須要件。  
 [Microsoft SQL Server by Microsoft | Docker Hub](https://hub.docker.com/_/microsoft-mssql-server#:~:text=Configuration-,Requirements,-This%20image%20requires)
 
-## 2. 作業を開始するとき
+## 3. 作業を開始するとき
 
 1. WSL2 を立ち上げる。
    1. Azure Data Studio で接続する場合は `ip a | grep eth0 | grep inet` を実行しておいて IP アドレスを控えておく。
@@ -40,28 +44,28 @@ SQL Server を WSL 上の Docker コンテナで構築するサンプルです�
 
       2. `接続` ボタンをクリックし、接続ができたことを確認する。
 
-## 3. 作業を終了するとき
+## 4. 作業を終了するとき
 
 1. `docker-compose stop` で起動中のコンテナを停止する。
 2. `docker ps` コマンドを送信してコンテナが一覧に表示されていないことを確認する。
 3. `sudo service docker stop` を送信して Docker を停止する。
 4. `sudo service docker status` で Docker が終了していることを確認する。
 
-## 4. 参考文献
+## 5. 参考文献
 
-### 4.1. WSL2
+### 5.1. WSL2
 
 - [WSL のインストール | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows/wsl/install)
 - [Windows Terminal + WSL 2 + Homebrew + Zsh - Qiita](https://qiita.com/okayurisotto/items/36f6f9df499a74e62bff)
 - [windows10でVSCode+WSL2(Ubuntu)+Docker Desktopの開発環境を作る](https://zenn.dev/ivgtr/scraps/92e14f80683be9)
 
-### 4.2. Docker・Docker Compose
+### 5.2. Docker・Docker Compose
 
 - [Install Docker Engine on Ubuntu | Docker Documentation](https://docs.docker.com/engine/install/ubuntu/)
 - [ubuntu20.04にDockerとdocker-composeをインストールする](https://zenn.dev/k_neko3/articles/76340d2db1f43d)
 - [Microsoft SQL Server by Microsoft | Docker Hub](https://hub.docker.com/_/microsoft-mssql-server)
 
-### 4.3. Azure Data Studio
+### 5.3. Azure Data Studio
 
 - [Azure Data Studio - 日本語化する方法](https://www.curict.com/item/48/48b33f5.html)
 - [WSL2上のDockerでSQL Server実行してSSMSで繋ぐまで - YOMON8.NET](https://yomon.hatenablog.com/entry/2020/03/wsl2_mssql_ssms)
