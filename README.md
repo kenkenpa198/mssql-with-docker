@@ -5,8 +5,9 @@ SQL Server を WSL 上の Docker コンテナで構築する自分用テンプ�
 
 ## 1. リンク
 
-- [環境構築メモ.md](docs/環境構築メモ.md)
+- [SQLメモ.md](docs/SQLメモ.md)
 - [コマンドメモ.md](docs/コマンドメモ.md)
+- [環境構築メモ.md](docs/環境構築メモ.md)
 
 ## 2. 必要な環境
 
