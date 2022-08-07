@@ -46,7 +46,7 @@
     - [7.6. ウィンドウ関数](#76-ウィンドウ関数)
     - [7.7. GROUPING](#77-grouping)
 - [8. 自作クエリ](#8-自作クエリ)
-    - [8.1. 要素の組み合わせ毎の件数を取得する](#81-要素の組み合わせ毎の件数を取得する)
+    - [8.1. 値の組み合わせ毎の件数を取得する](#81-値の組み合わせ毎の件数を取得する)
     - [8.2. カラムの情報を見やすい形式で表示する](#82-カラムの情報を見やすい形式で表示する)
     - [8.3. CSV などのデータファイルからインポート](#83-csv-などのデータファイルからインポート)
 - [9. 参考文献](#9-参考文献)
@@ -552,7 +552,7 @@ comming soon...
 
 ## 8. 自作クエリ
 
-### 8.1. [要素の組み合わせ毎の件数を取得する](../mount_dir/sql/select_multi_count.sql)
+### 8.1. [値の組み合わせ毎の件数を取得する](../mount_dir/sql/select_multi_count.sql)
 
 指定したカラムのフィールドに存在する値の組み合わせ毎の件数を取得する。  
 めちゃくちゃ使っている。  
@@ -563,15 +563,12 @@ SELECT TOP 99999999
     t.column_B,
     CASE WHEN t.column_C IS NULL THEN 'NULL' ELSE 'NOT NULL' END AS column_C,
     COUNT(*) AS cnt
-
 FROM
     [tb] t -- ★テーブル名を指定
-
 GROUP BY
     t.column_A,
     t.column_B,
     CASE WHEN t.column_C IS NULL THEN 'NULL' ELSE 'NOT NULL' END
-
 ORDER BY
     column_A,
     column_B,
@@ -583,32 +580,35 @@ ORDER BY
 指定したテーブルの カラム名 / 主キー / データ型 / 長さ / NULL 許可 / デフォルト値 を出力する。  
 ★のコメント部分へテーブル名を指定する。
 
-PostgreSQL の `\d tb` のイメージ。
+PostgreSQL の `\d tb` のイメージ。  
 SQL Server だと手軽に確認する方法が無いようなので作成した。
+
+参考サイト :
+
+- [【SQL】テーブルからカラム情報を取得する”sys.columns”の上手な使い方を伝授！ | ポテパンスタイル](https://style.potepan.com/articles/24713.html)
+- [SQL Server - 主キーの一覧を取得するクエリ - いちろぐ](https://ichiroku11.hatenablog.jp/entry/2015/12/20/213107)
+- [SQL Server のカタログビューからテーブルの定義書情報を取得する | JOHOBASE](https://johobase.com/sqlserver-catalogview-table-column/)
+- [オブジェクト カタログ ビュー (Transact-SQL) - SQL Server | Microsoft Docs](https://docs.microsoft.com/ja-jp/sql/relational-databases/system-catalog-views/object-catalog-views-transact-sql?view=sql-server-ver15)
 
 ```sql
 SELECT
     o.name                    AS 'テーブル名',
     c.name                    AS 'カラム名',
     CASE
-        WHEN pk.is_primary_key = 1
-        THEN 'YES'
+        WHEN pk.is_primary_key = 1 THEN 'YES'
         ELSE 'NO'
     END                       AS '主キー',
     type_name(c.user_type_id) AS 'データ型',
     c.max_length              AS '長さ（バイト数）',
     CASE
-        WHEN c.is_nullable = 1
-        THEN 'YES'
+        WHEN c.is_nullable = 1 THEN 'YES'
         ELSE 'NO'
     END                       AS 'NULL 許可',
     CASE
         -- デフォルト値に含まれている '((' と '))' を除去する
-        WHEN LEFT(d.definition, 2) = '((' AND RIGHT(d.definition, 2) = '))'
-        THEN SUBSTRING(d.definition, 3, LEN(d.definition) - 4)
+        WHEN LEFT(d.definition, 2) = '((' AND RIGHT(d.definition, 2) = '))' THEN SUBSTRING(d.definition, 3, LEN(d.definition) - 4)
         -- デフォルト値に含まれている '(' と ')' を除去する
-        WHEN LEFT(d.definition, 1) = '(' AND RIGHT(d.definition, 1) = ')'
-        THEN SUBSTRING(d.definition, 2, LEN(d.definition) - 2)
+        WHEN LEFT(d.definition, 1) = '(' AND RIGHT(d.definition, 1) = ')'   THEN SUBSTRING(d.definition, 2, LEN(d.definition) - 2)
         ELSE NULL
     END                       AS 'デフォルト値'
 
@@ -616,32 +616,32 @@ SELECT
 FROM
     sys.objects AS o
 
-    -- カラムのカタログビュー（カラム名やデータ型などの情報を保有）と内部結合
-    INNER JOIN sys.columns AS c
-    ON o.object_id = c.object_id
+        -- カラムのカタログビュー（カラム名やデータ型などの情報を保有）と内部結合
+        INNER JOIN sys.columns AS c
+            ON o.object_id = c.object_id
 
-    --インデックス関連のカタログビュー（PK の情報を保有）と外部結合
-    LEFT OUTER JOIN (
-        SELECT
-            ic.object_id,
-            ic.column_id,
-            i.is_primary_key
-        FROM
-            sys.indexes AS i
-            INNER JOIN sys.index_columns AS ic
+        --インデックス関連のカタログビュー（PK の情報を保有）と外部結合
+        LEFT OUTER JOIN (
+            SELECT
+                ic.object_id,
+                ic.column_id,
+                i.is_primary_key
+            FROM
+                sys.indexes AS i
+                INNER JOIN sys.index_columns AS ic
+                ON
+                    i.object_id = ic.object_id
+                    AND i.index_id = ic.index_id
+        ) pk
             ON
-                i.object_id = ic.object_id
-                AND i.index_id = ic.index_id
-    ) pk
-    ON
-        o.object_id = pk.object_id
-        AND c.column_id = pk.column_id
+                o.object_id = pk.object_id
+                AND c.column_id = pk.column_id
 
-    -- デフォルト制約のカタログビュー（デフォルト値の情報を保有）と外部結合
-    LEFT OUTER JOIN sys.default_constraints AS d
-    ON
-        o.object_id = d.parent_object_id
-        AND c.column_id = d.parent_column_id
+        -- デフォルト制約のカタログビュー（デフォルト値の情報を保有）と外部結合
+        LEFT OUTER JOIN sys.default_constraints AS d
+            ON
+                o.object_id = d.parent_object_id
+                AND c.column_id = d.parent_column_id
 
 WHERE
     o.type = 'U' -- オブジェクトの種類を「テーブル (ユーザー定義)」のみに制限
@@ -656,7 +656,12 @@ ORDER BY
 
 ### 8.3. [CSV などのデータファイルからインポート](../mount_dir/sql/insert_from_CSV.sql)
 
-※SQL Server
+SQL Server の `BULK INSERT` を使用した SQL 文。
+
+参考サイト :
+
+- [BULK INSERT (Transact-SQL) - SQL Server | Microsoft Docs](https://docs.microsoft.com/ja-jp/sql/t-sql/statements/bulk-insert-transact-sql?view=sql-server-ver15)
+- [SQL Server で BULK INSERT をつかってcsvなどのデータを取込む方法 - Qiita](https://qiita.com/fuk101/items/d98716a48d69d5c7f1a7)
 
 ```sql
 BULK INSERT members
