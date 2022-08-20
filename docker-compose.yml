@@ -1,7 +1,11 @@
+# docker-compose.yml のファイルバージョン定義
 version: '3'
+
+# サービス（コンテナ）の定義
 services:
+  # db コンテナの設定を定義
   db:
-    # SQL Server 2019 でビルド
+    # SQL Server 2019 イメージでビルド
     image: mcr.microsoft.com/mssql/server:2019-latest
 
     # ポート設定
@@ -17,7 +21,11 @@ services:
       MSSQL_AGENT_ENABLED: 'true'       # SQLServer を落とさずに起動し続ける
       PATH: $PATH:/opt/mssql-tools/bin/ # sqlcmd の PATH を通す
 
-    # ホスト側ディレクトリとコンテナをマウント
-    # ./mount_dir ディレクトリ配下にファイルを配置すると、コンテナ上の root 配下にある同名ディレクトリへファイルが同期される
+    # db コンテナのマウント設定
     volumes:
-      - ./mount_dir:/mount_dir
+      - ./mount_dir:/mount_dir    # ホストディレクトリ:コンテナディレクトリ でマウント。./mount_dir ディレクトリ配下にファイルを配置すると、コンテナ上の root 配下にある同名ディレクトリへファイルが同期される
+      - db-volume:/var/opt/mssql/ # 名前付きデータボリューム:コンテナディレクトリ でマウント。db-volume データボリュームとコンテナの MSSQL ディレクトリをマウントし、データを永続化する
+
+# 利用するボリュームの定義
+volumes:
+  db-volume: # 永続化のためにマウントするデータボリュームの名前を定義。
