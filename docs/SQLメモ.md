@@ -566,13 +566,16 @@ SELECT TOP 99999999
 FROM
     [tb] t -- ★テーブル名を指定
 GROUP BY
-    t.column_A,
-    t.column_B,
-    CASE WHEN t.column_C IS NULL THEN 'NULL' ELSE 'NOT NULL' END
+    ROLLUP((
+        t.column_A,
+        t.column_B,
+        CASE WHEN t.column_C IS NULL THEN 'NULL' ELSE 'NOT NULL' END
+    ))
 ORDER BY
     column_A,
     column_B,
     column_C
+;
 ```
 
 ### 8.2. [カラムの情報を見やすい形式で表示する](../mount_dir/sql/show_columns_info.sql)
@@ -688,3 +691,4 @@ WITH
 
 - [SQL 第2版 ゼロからはじめるデータベース操作 (プログラミング学習シリーズ)](https://www.amazon.co.jp/gp/product/4798144452/ref=ppx_yo_dt_b_asin_title_o00_s00)
 - [達人に学ぶSQL徹底指南書 第2版 初級者で終わりたくないあなたへ](https://www.amazon.co.jp/gp/product/4798157821/ref=ppx_yo_dt_b_asin_title_o02_s00)
+- [Rollupちゃんと理解してる？ - Qiita](https://qiita.com/tlokweng/items/a15b67f3475e38282dca)
