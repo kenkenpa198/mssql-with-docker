@@ -3,7 +3,7 @@ services:
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest # SQL Server 2019 イメージでビルド
     ports:
-      - 11433:1433 # Azure Data Studio など外部から接続するときはサーバーに「localhost, 11433」を指定する
+      - 11433:1433 # Azure Data Studio など外部から接続するときはサーバーに「localhost,11433」を指定する
     environment:
       - ACCEPT_EULA=Y                    # EULA（使用許諾契約）に同意する ※起動にはこの設定が必須
       - MSSQL_PID=Express                # Express エディション（ライセンスが不要）を使用
