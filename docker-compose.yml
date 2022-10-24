@@ -1,31 +1,18 @@
-# docker-compose.yml のファイルバージョン定義
 version: '3'
-
-# サービス（コンテナ）の定義
 services:
-  # db コンテナの設定を定義
   db:
-    # SQL Server 2019 イメージでビルド
     image: mcr.microsoft.com/mssql/server:2019-latest
-
-    # ポート設定
     ports:
-      - 1433:1433
-
-    # 環境変数を設定
+      - 11433:1433
     environment:
-      MSSQL_PID: Express                # ライセンスが不要な Express エディションを使用する
-      ACCEPT_EULA: Y                    # EULA（使用許諾契約）に同意する ※起動にはこの設定が必須
-      TZ: Asia/Tokyo                    # タイムゾーンを JST で設定
-      SA_PASSWORD: Test1234             # パスワード
-      MSSQL_AGENT_ENABLED: 'true'       # SQLServer を落とさずに起動し続ける
-      PATH: $PATH:/opt/mssql-tools/bin/ # sqlcmd の PATH を通す
-
-    # db コンテナのマウント設定
+      - ACCEPT_EULA=Y                    # EULA（使用許諾契約）に同意
+      - MSSQL_SA_PASSWORD                # MSSQL のパスワード。.env に記述されたパスワードを渡す
+      - MSSQL_PID=Express                # Express エディションを使用
+      - MSSQL_AGENT_ENABLED=true         # SQLServer を落とさずに起動し続ける
+      - PATH=$PATH:/opt/mssql-tools/bin/ # sqlcmd の PATH を通す
+      - TZ=Asia/Tokyo                    # タイムゾーンを JST で設定
     volumes:
-      - ./mount_dir:/mount_dir    # ホストディレクトリ:コンテナディレクトリ でマウント。./mount_dir ディレクトリ配下にファイルを配置すると、コンテナ上の root 配下にある同名ディレクトリへファイルが同期される
-      - db-volume:/var/opt/mssql/ # 名前付きデータボリューム:コンテナディレクトリ でマウント。db-volume データボリュームとコンテナの MSSQL ディレクトリをマウントし、データを永続化する
-
-# 利用するボリュームの定義
+      - ./mount_dir:/mount_dir    # ホストディレクトリ:コンテナディレクトリ でバインドマウント。./mount_dir ディレクトリ配下にファイルを配置すると、コンテナ上の root 配下にある同名ディレクトリへファイルが同期される
+      - db-volume:/var/opt/mssql/ # 名前付きデータボリューム:コンテナディレクトリ でバインドマウント。db-volume データボリュームとコンテナの MSSQL ディレクトリをマウントし、データを永続化する
 volumes:
-  db-volume: # 永続化のためにマウントするデータボリュームの名前を定義。
+  db-volume: # データボリュームの名前を定義
