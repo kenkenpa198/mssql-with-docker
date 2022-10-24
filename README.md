@@ -26,14 +26,14 @@ SQL Server を WSL 上の Docker コンテナで構築する自分用テンプ�
 2. WSL2 環境上で Docker が起動しているか `sudo service docker status` を送信して確認する。
     1. `Docker is running` と出力された場合: 問題なし。
     2. `Docker is not running` と表示された場合: Docker を起動させるコマンド `sudo service docker start` を送信後、もう一度確認コマンドを送信して確認する。
-3. `docker-compose up -d` を送信して SQL Server のコンテナを作成 & バックグラウンドで起動する。
-4. `docker ps` コマンドを送信してコンテナが起動中か確認する。
+3. `sudo docker-compose up -d` を送信して SQL Server のコンテナを作成 & バックグラウンドで起動する。
+4. `sudo docker ps` コマンドを送信してコンテナが起動中か確認する。
 5. 作業方法に合わせて SQL Server の利用を開始する。
    1. CLI から実行する場合:
         1. コンテナ内の sqlcmd を使ってログインする。
 
         ```shell
-        $ docker exec -it mssql_with_docker_db_1 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'パスワード'
+        $ docker exec -it mssql_with_docker-db-1 sqlcmd -S localhost -U SA -P 'パスワード'
         1>
         ```
 
@@ -43,8 +43,8 @@ SQL Server を WSL 上の Docker コンテナで構築する自分用テンプ�
 
 ## 4. 作業を終了するとき
 
-1. `docker-compose stop` で起動中のコンテナを停止する。
-2. `docker ps` コマンドを送信してコンテナが一覧に表示されていないことを確認する。
+1. `sudo docker-compose stop` で起動中のコンテナを停止する。
+2. `sudo docker ps` コマンドを送信してコンテナが一覧に表示されていないことを確認する。
 3. `sudo service docker stop` を送信して Docker を停止する。
 4. `sudo service docker status` で Docker が終了していることを確認する。
 
@@ -60,8 +60,8 @@ SQL Server を WSL 上の Docker コンテナで構築する自分用テンプ�
 
 - [Docker Documentation | Docker Documentation](https://docs.docker.com/)
 - [Docker ドキュメント日本語化プロジェクト — Docker-docs-ja 20.10 ドキュメント](https://docs.docker.jp/index.html)
+- [Microsoft SQL Server - Ubuntu based images by Microsoft | Docker Hub](https://hub.docker.com/_/microsoft-mssql-server)
 - [ubuntu20.04にDockerとdocker-composeをインストールする](https://zenn.dev/k_neko3/articles/76340d2db1f43d)
-- [Microsoft SQL Server by Microsoft | Docker Hub](https://hub.docker.com/_/microsoft-mssql-server)
 - [Dockerのデータを永続化！Data Volume（データボリューム）の理解から始める環境構築入門 | Enjoy IT Life](https://nishinatoshiharu.com/docker-volume-tutorial/)
 - [DockerでSQL Serverを建ててsqlcmd, SSMS, JDBCでアクセスする - DockerでSQL Serverを建ててsqlcmd, SSMS, JDBCでアクセスする - aegif Labo Blog Alfresco](https://aegif.jp/alfresco/tech-info/-/20201104-alfresco/1.3)
 
