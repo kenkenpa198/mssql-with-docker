@@ -1,5 +1,5 @@
 <!-- omit in toc -->
-# MSSQL with Docker
+# mssql-with-docker
 
 SQL Server を WSL 上の Docker コンテナで構築する自分用テンプレート & メモ置き場です。  
 
@@ -33,7 +33,7 @@ SQL Server を WSL 上の Docker コンテナで構築する自分用テンプ�
         1. コンテナ内の sqlcmd を使ってログインする。
 
         ```shell
-        $ docker exec -it mssql_with_docker-db-1 sqlcmd -S localhost -U SA -P 'パスワード'
+        $ sudo docker exec -it mssql-with-docker_db_1 sqlcmd -S localhost -U SA -P 'パスワード'
         1>
         ```
 
