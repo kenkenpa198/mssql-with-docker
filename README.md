@@ -166,7 +166,7 @@ $ sudo service docker status
 
 ※ 以下個人的な理解のため間違っているかもしれません。
 
-Docker は「Docker デーモン（※1）」が基盤となり各種プログラムが実行される。  
+Docker は「Docker デーモン（※1）」が基盤となり各処理が実行される。  
 この Docker デーモンは Linux 標準のプログラム「Systemd（※2）」によって OS の起動時に自動実行されている。
 
 しかし WSL は Systemd に対応していない（※3）ため、WSL の立ち上げ時には Docker デーモンも起動していない状態となっている。
@@ -177,7 +177,7 @@ Docker は「Docker デーモン（※1）」が基盤となり各種プログ�
 ※2 Systemd … Linux のシステム初期化・管理・設定を担うプログラム。ちなみに Systemd 自体もデーモンである。
 ※3 [Microsoft Store 版 v0.67.6 以降の WSL は Systemd に対応したらしい](https://forest.watch.impress.co.jp/docs/news/1441775.html)（未検証）。
 
-なお Docker Desktop を使用する場合は Docker Desktop の起動時に WSL 上の Docker デーモンも起動してくれる。  
+なお Docker Desktop を使用する場合は Docker Desktop の起動時に WSL 上の Docker デーモンも起動してくれるそう。  
 このため、デーモンを手動で起動せずともコマンドの実行が可能。
 
 ## 6. 参考文献
