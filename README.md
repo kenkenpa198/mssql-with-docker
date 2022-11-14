@@ -13,9 +13,9 @@ SQL Server を WSL 上の Docker コンテナで構築する自分用テンプ�
 - [5. service コマンドによる Docker 起動方法](#5-service-コマンドによる-docker-起動方法)
     - [5.1. 起動するとき](#51-起動するとき)
     - [5.2. 停止するとき](#52-停止するとき)
-    - [5.3. 補足: なぜ WSL2 の立ち上げ時に Docker コマンドを受け付けないのか](#53-補足-なぜ-wsl2-の立ち上げ時に-docker-コマンドを受け付けないのか)
+    - [5.3. 補足: なぜ WSL の立ち上げ時に Docker コマンドを受け付けないのか](#53-補足-なぜ-wsl-の立ち上げ時に-docker-コマンドを受け付けないのか)
 - [6. 参考文献](#6-参考文献)
-    - [6.1. WSL2](#61-wsl2)
+    - [6.1. WSL](#61-wsl)
     - [6.2. Docker](#62-docker)
     - [6.3. Azure Data Studio](#63-azure-data-studio)
 
@@ -28,7 +28,7 @@ SQL Server を WSL 上の Docker コンテナで構築する自分用テンプ�
 ## 2. 必要な環境
 
 - OS: Windows 10 バージョン 2004 以降 (ビルド 19041 以降) または Windows 11
-- WSL2（Ubuntu）
+- WSL（Ubuntu）
 - Docker
     - メモリ制限 : 2GB 以上 ※
 - Docker Compose
@@ -38,7 +38,7 @@ SQL Server を WSL 上の Docker コンテナで構築する自分用テンプ�
 
 ## 3. 作業を開始するとき
 
-1. WSL2 を起動し、このディレクトリへ入る。
+1. WSL を起動し、このディレクトリへ入る。
 
     ```shell
     $ cd mssql-with-docker
@@ -46,7 +46,7 @@ SQL Server を WSL 上の Docker コンテナで構築する自分用テンプ�
 
 2. Docker を起動する。
     1. Win 環境へ Docker Desktop をインストールしていた場合、Windows のスタートメニュー等から Docker Desktop アプリを実行する。
-    2. WSL2 環境へ Docker を直接インストールしていた場合、 [5. service コマンドによる Docker 起動方法](#5-service-コマンドによる-docker-起動方法) セクションを参考に起動する。
+    2. WSL 環境へ Docker を直接インストールしていた場合、 [5. service コマンドによる Docker 起動方法](#5-service-コマンドによる-docker-起動方法) セクションを参考に起動する。
 3. Docker コンテナを `docker-compose.yml` を使用して起動する。
 
     ```shell
@@ -116,11 +116,11 @@ SQL Server を WSL 上の Docker コンテナで構築する自分用テンプ�
 
 4. 必要であれば Docker も終了する。
     1. Win 環境へ Docker Desktop をインストールしていた場合、Windows のタスクバー > Docker のアイコンを右クリック > `Quit Docker Desktop` を実行する。
-    2. WSL2 環境へ Docker を直接インストールしていた場合、 [5. service コマンドでの Docker 起動方法](#5-service-コマンドでの-docker-起動方法) セクションを参考に停止する。
+    2. WSL 環境へ Docker を直接インストールしていた場合、 [5. service コマンドでの Docker 起動方法](#5-service-コマンドでの-docker-起動方法) セクションを参考に停止する。
 
 ## 5. service コマンドによる Docker 起動方法
 
-WSL2 は立ち上げ時に Docker コマンドが受け付けられない状態となっている（詳しくは [補足](#53-補足-なぜ-wsl2-の立ち上げ時に-docker-コマンドを受け付けないのか) セクションを参照）。  
+WSL は立ち上げ時に Docker コマンドが受け付けられない状態となっている（詳しくは [補足](#53-補足-なぜ-WSL-の立ち上げ時に-docker-コマンドを受け付けないのか) セクションを参照）。  
 
 ```shell
 # WSL 起動直後の状態で docker コマンドを実行
@@ -162,14 +162,14 @@ $ sudo service docker status
 * Docker is not running
 ```
 
-### 5.3. 補足: なぜ WSL2 の立ち上げ時に Docker コマンドを受け付けないのか
+### 5.3. 補足: なぜ WSL の立ち上げ時に Docker コマンドを受け付けないのか
 
 ※ 以下個人的な理解のため間違っているかもしれません。
 
 Docker は「Docker デーモン（※1）」が基盤となり各種プログラムが実行される。  
 この Docker デーモンは Linux 標準のプログラム「Systemd（※2）」によって OS の起動時に自動実行されている。
 
-しかし WSL2 は Systemd に対応していない（※3）ため、WSL の立ち上げ時には Docker デーモンも起動していない状態となっている。
+しかし WSL は Systemd に対応していない（※3）ため、WSL の立ち上げ時には Docker デーモンも起動していない状態となっている。
 
 したがって WSL を起動後に続けて Docker コマンドを送信しても、受け取り手がそもそも存在しないのでコマンドが受け付けられないということ。
 
@@ -182,7 +182,7 @@ Docker は「Docker デーモン（※1）」が基盤となり各種プログ�
 
 ## 6. 参考文献
 
-### 6.1. WSL2
+### 6.1. WSL
 
 - [WSL のインストール | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows/wsl/install)
 - [Windows Terminal + WSL 2 + Homebrew + Zsh - Qiita](https://qiita.com/okayurisotto/items/36f6f9df499a74e62bff)
