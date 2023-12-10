@@ -12,7 +12,18 @@ services:
       - PATH=$PATH:/opt/mssql-tools/bin/ # sqlcmd の PATH を通す
       - TZ=Asia/Tokyo                    # タイムゾーンを JST で設定
     volumes:
-      - ./mount_dir:/mount_dir    # ホストディレクトリ:コンテナディレクトリ でバインドマウント。./mount_dir ディレクトリ配下にファイルを配置すると、コンテナ上の root 配下にある同名ディレクトリへファイルが同期される
-      - db-volume:/var/opt/mssql/ # 名前付きデータボリューム:コンテナディレクトリ でバインドマウント。db-volume データボリュームとコンテナの MSSQL ディレクトリをマウントし、データを永続化する
+      # [ホストディレクトリ]:[コンテナディレクトリ] でバインドマウント
+      # ./mount_dir ディレクトリ配下にファイルを配置すると、コンテナ上の root 配下にある同名ディレクトリへファイルが同期される
+      - ./mount_dir:/mount_dir
+      # [名前付きデータボリューム]:[コンテナディレクトリ] でバインドマウント
+      # db-volume データボリュームとコンテナの MSSQL ディレクトリをマウントし、データを永続化する
+      - db-volume:/var/opt/mssql/
+    logging:
+      # ログローテート
+      driver: 'json-file'
+      options:
+        max-file: '3'
+        max-size: '1m'
+
 volumes:
   db-volume: # データボリュームの名前を定義
